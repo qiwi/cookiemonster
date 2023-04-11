@@ -1,0 +1,70 @@
+{
+  "name": "@qiwi/cookiemonster",
+  "alias": "cookiemonster",
+  "version": "0.0.0",
+  "description": "Stateless fake API based on cookie processing",
+  "main": "./target/cjs/index.js",
+  "module": "./target/esm/index.mjs",
+  "types": "./target/dts/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./target/cjs/index.js",
+      "import": "./target/esm/index.mjs",
+      "types": "./target/dts/index.d.ts"
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "concurrently 'npm:build:*'",
+    "build:esm": "node ./src/scripts/build.cjs && rename -f 's/\\.js$/\\.mjs/' target/esm/*.js",
+    "build:cjs": "node ./src/scripts/build.cjs --cjs",
+    "build:dts": "tsc --emitDeclarationOnly --outDir target/dts",
+    "build:docs": "typedoc --options src/main/typedoc",
+    "lint": "eslint -c src/test/lint/.eslintrc.json src",
+    "format": "yarn test:lint --fix",
+    "test": "concurrently 'npm:test:*'",
+    "test:lint": "eslint -c src/test/lint/.eslintrc.json src",
+    "test:unit": "c8 -r html -r text -r lcov --exclude ./src/test -o ./target/coverage uvu -r tsm src/test/ts",
+    "test:it": "uvu -r tsm src/test/js"
+  },
+  "files": [
+    "target/cjs",
+    "target/esm",
+    "target/dts",
+    "README.md",
+    "package.json"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/qiwi/cookiemonster.git"
+  },
+  "devDependencies": {
+    "@types/node": "^18.15.11",
+    "@types/toposort": "^2.0.3",
+    "c8": "^7.13.0",
+    "concurrently": "^8.0.1",
+    "esbuild": "^0.17.15",
+    "esbuild-node-externals": "^1.7.0",
+    "eslint": "^8.38.0",
+    "eslint-config-qiwi": "^2.1.1",
+    "tsm": "^2.3.0",
+    "typedoc": "^0.24.1",
+    "typescript": "^5.0.4",
+    "uvu": "^0.5.6"
+  },
+  "keywords": [
+    "fake",
+    "stub",
+    "mock",
+    "api",
+    "fakeapi",
+    "cookie",
+    "cookiemonster"
+  ],
+  "contributors": [
+    "Anton Golub <antongolub@antongolub.com>"
+  ],
+  "license": "MIT"
+}

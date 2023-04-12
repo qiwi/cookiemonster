@@ -1,6 +1,5 @@
 {
   "name": "@qiwi/cookiemonster",
-  "alias": "cookiemonster",
   "version": "0.0.0",
   "description": "Stateless fake API based on cookie processing",
   "main": "./target/cjs/index.js",

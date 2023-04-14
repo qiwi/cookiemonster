@@ -24,7 +24,6 @@ On client:
 document.cookie = 'Fake-Scenario={order-details:{ok: {themeCode: "salampay"}}+payment-methods:{ok}+commission:{ok}+polling:{ok}+pay:{ok}+merchant-site:{ok}+email:{ok}+create-invoice:{ok}+customization:{ok}+create-qr-code:{ok}}'
 ```
 
-
 ## Refs
 * [mock-server/mockserver](https://github.com/mock-server/mockserver)
 

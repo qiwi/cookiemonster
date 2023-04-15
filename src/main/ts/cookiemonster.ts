@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import { Buffer } from 'node:buffer'
 import yaml from 'js-yaml'
-import { IScenario, IScenarioNormalized, IResponse, IRequest, INext } from './interface'
+import {IScenario, IScenarioNormalized, IResponse, IRequest, INext, IFakeRequest} from './interface'
 
 export const cookiemonster = () => middleware
 
@@ -13,7 +13,7 @@ export const middleware = (req: IRequest, res: IResponse, next: INext) => {
       throw new Error('scenario not found')
     }
     const scenario = parseScenario(raw)
-    const {code, body, cookie} = processScenario(scenario)
+    const {code, body, cookie} = processScenario(scenario, req)
 
     res.cookie('Cookiemonster', cookie)
     res
@@ -25,13 +25,15 @@ export const middleware = (req: IRequest, res: IResponse, next: INext) => {
   }
 }
 
-export const processScenario = (scenario: IScenario) => {
+export const processScenario = (scenario: IScenario, input: IRequest) => {
   const {steps, cursor} = normalizeScenario(scenario)
   const step = steps[cursor]
   if (!step) {
     throw new Error(`step ${cursor} not found`)
   }
   const {req, res } = step
+
+  verifyRequest(input, step.req)
 
   return {
     code: res.code || 200,
@@ -40,11 +42,15 @@ export const processScenario = (scenario: IScenario) => {
   }
 }
 
-// export const checkRequest = (input, extected) => {
-//   if (extected.method) {
-//
-//   }
-// }
+export const verifyRequest = (input: IRequest, expected: IFakeRequest) => {
+  if (expected.method && input.method !== expected.method) {
+    throw new Error(`req method mismatch: ${input.method} !== ${expected.method}`)
+  }
+
+  if (expected.path && input.path !== expected.path) {
+    throw new Error(`req path mismatch: ${input.path} !== ${expected.path}`)
+  }
+}
 
 export const formatScenario = (scenario: IScenario) => Buffer.from(yaml
   .dump(scenario, {

@@ -14,14 +14,21 @@ const app = express()
 
 app.use(cookieParser())
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true }))
-
-app.get('/', cookiemonster())
+app.use(cookiemonster())
 ```
 
 On client:
+
 ```ts
-document.cookie = 'Fake-Scenario={order-details:{ok: {themeCode: "salampay"}}+payment-methods:{ok}+commission:{ok}+polling:{ok}+pay:{ok}+merchant-site:{ok}+email:{ok}+create-invoice:{ok}+customization:{ok}+create-qr-code:{ok}}'
+import {formatScenario} from '@qiwi/cookiemonster'
+
+const data = formatScenario({
+  steps: [
+    {res: {code: 200, body: {foo: 'bar'}}}
+  ]
+})
+
+document.cookie = `Cookiemonster=${data}`
 ```
 
 ## Refs

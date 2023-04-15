@@ -1,14 +1,10 @@
 import { test } from 'uvu'
 import * as assert from 'uvu/assert'
 
-import { middleware, parseScenario } from '../../main/ts/cookiemonster'
+import {parseScenario, formatScenario, normalizeScenario} from '../../main/ts/cookiemonster'
 import { IScenario, IScenarioNormalized } from '../../main/ts'
 
-test('cookiemonster', () => {
-  assert.equal(middleware(), 'test')
-})
-
-test('parseScenario()', () => {
+test('formatScenario() / parseScenario()', () => {
   const cases: [IScenario, string | IScenarioNormalized][] = [
     [
       {steps: [{res: 'foo'}]},
@@ -38,7 +34,7 @@ test('parseScenario()', () => {
 
   cases.forEach(([input, expected], i) => {
     try {
-      const output = parseScenario(JSON.stringify(input))
+      const output = normalizeScenario(parseScenario(formatScenario(input)))
       assert.equal(output, expected, i + '')
     } catch (e) {
       assert.equal(e.message, expected)

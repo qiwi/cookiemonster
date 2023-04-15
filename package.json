@@ -1,7 +1,7 @@
 {
   "name": "@qiwi/cookiemonster",
   "alias": "qookiemonster",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Stateless fake API based on cookie processing",
   "main": "./target/cjs/index.js",
   "module": "./target/esm/index.mjs",

@@ -33,7 +33,7 @@ export const processScenario = (scenario: IScenario, input: IRequest) => {
   }
   const {req, res } = step
 
-  verifyRequest(input, step.req)
+  verifyRequest(input, req)
 
   return {
     code: res.code || 200,

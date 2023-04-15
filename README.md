@@ -1,4 +1,4 @@
-# cookiemonster
+# qookiemonster
 [![CI](https://github.com/qiwi/cookiemonster/actions/workflows/ci.yaml/badge.svg?branch=master&event=push)](https://github.com/qiwi/cookiemonster/actions/workflows/ci.yaml)
 [![Maintainability](https://api.codeclimate.com/v1/badges/01b67bf5bc60a67df296/maintainability)](https://codeclimate.com/github/qiwi/cookiemonster/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/01b67bf5bc60a67df296/test_coverage)](https://codeclimate.com/github/qiwi/cookiemonster/test_coverage)
@@ -17,6 +17,8 @@ const app = express()
 app.use(cookieParser())
 app.use(bodyParser.json())
 app.use(cookiemonster())
+
+app.listen(8080)
 ```
 
 On client:
@@ -31,6 +33,9 @@ const data = formatScenario({
 })
 
 document.cookie = `Cookiemonster=${data}`
+
+const result = await fetch('http://localhost:8080', {credentials: 'include'})
+const json = await result.json() // {foo: 'bar'}
 ```
 
 ## Refs

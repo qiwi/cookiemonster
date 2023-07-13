@@ -18,7 +18,6 @@ test('verifyRequest()', () => {
   const cases: [IRequest, IFakeRequest, string?][] = [
     [{method: 'get'}, {method: 'post'}, 'req method mismatch: get !== post'],
     [{path: '/foo/bar', method: 'get'}, {path: '/bar/baz'}, 'req path mismatch: /foo/bar !== /bar/baz'],
-
   ]
 
   for (const [input, expected, err] of cases) {
